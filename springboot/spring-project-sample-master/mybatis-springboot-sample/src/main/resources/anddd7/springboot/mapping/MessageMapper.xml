@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="anddd7.springboot.dao.MessageMapper" >
+  <resultMap id="BaseResultMap" type="anddd7.springboot.domain.Message" >
+    <id column="msg_id" property="msgId" jdbcType="DECIMAL" />
+    <result column="user_code" property="userCode" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="profile_bg_img" property="profileBgImg" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="msg_short" property="msgShort" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    msg_id, user_code, user_name, profile_bg_img, create_time, msg_short
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from message_info
+    where msg_id = #{msgId,jdbcType=DECIMAL}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from message_info
+    where msg_id = #{msgId,jdbcType=DECIMAL}
+  </delete>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="anddd7.springboot.domain.Message" >
+    insert into message_info (msg_id, user_code, user_name, 
+      profile_bg_img, create_time, msg_short
+      )
+    values (#{msgId,jdbcType=DECIMAL}, #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{profileBgImg,jdbcType=VARCHAR}, CURRENT_TIMESTAMP , #{msgShort,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="anddd7.springboot.domain.Message" >
+    insert into message_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="msgId != null" >
+        msg_id,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="profileBgImg != null" >
+        profile_bg_img,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="msgShort != null" >
+        msg_short,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="msgId != null" >
+        #{msgId,jdbcType=DECIMAL},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="profileBgImg != null" >
+        #{profileBgImg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgShort != null" >
+        #{msgShort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="anddd7.springboot.domain.Message" >
+    update message_info
+    <set >
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="profileBgImg != null" >
+        profile_bg_img = #{profileBgImg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgShort != null" >
+        msg_short = #{msgShort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where msg_id = #{msgId,jdbcType=DECIMAL}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="anddd7.springboot.domain.Message" >
+    update message_info
+    set user_code = #{userCode,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      profile_bg_img = #{profileBgImg,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      msg_short = #{msgShort,jdbcType=VARCHAR}
+    where msg_id = #{msgId,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByExample" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from message_info
+    where 1=1
+    <if test="example.msgId != null">
+      AND msg_id = #{example.msgId,jdbcType=DECIMAL}
+    </if>
+    <if test="example.userCode != null">
+      AND user_code = #{example.userCode,jdbcType=VARCHAR}
+    </if>
+    <if test="example.userName != null">
+      AND user_name = #{example.userName,jdbcType=VARCHAR}
+    </if>
+    <if test="example.profileBgImg != null">
+      AND profile_bg_img = #{example.profileBgImg,jdbcType=VARCHAR}
+    </if>
+    <if test="example.createTime != null">
+      AND create_time = #{example.createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="example.msgShort != null">
+      AND msg_short LIKE '%'#{msgShort,jdbcType=VARCHAR}'%'
+    </if>
+    ORDER BY create_time DESC
+    <if test="startIndex != null  and pageNum != null ">
+      LIMIT #{startIndex},#{pageNum}
+    </if>
+  </select>
+
+  <select id="selectCountByExample" resultType="java.lang.Long" parameterType="anddd7.springboot.domain.Message">
+    select
+    count(*)
+    from message_info
+    where 1=1
+    <if test="msgId != null">
+      AND msg_id = #{msgId,jdbcType=DECIMAL}
+    </if>
+    <if test="userCode != null">
+      AND user_code = #{userCode,jdbcType=VARCHAR}
+    </if>
+    <if test="userName != null">
+      AND user_name = #{userName,jdbcType=VARCHAR}
+    </if>
+    <if test="profileBgImg != null">
+      AND profile_bg_img = #{profileBgImg,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null">
+      AND create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="msgShort != null">
+      AND msg_short LIKE '%'#{msgShort,jdbcType=VARCHAR}'%'
+    </if>
+  </select>
+</mapper>

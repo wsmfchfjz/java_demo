@@ -1,0 +1,29 @@
+{
+  "name": "websample",
+  "homepage": "https://github.com/Anddd7/SSM-SpringBoot-Starter",
+  "authors": [
+    "阿东 <liaoad_space@sina.com>"
+  ],
+  "description": "SpringBoot-Sample's Front-End source",
+  "main": "index.html",
+  "keywords": [
+    "spring",
+    "boot"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7",
+    "jquery-ui": "jqueryui#^1.12.1",
+    "vue": "^2.3.3",
+    "requirejs": "^2.3.3",
+    "knockout": "^3.4.2"
+  }
+}

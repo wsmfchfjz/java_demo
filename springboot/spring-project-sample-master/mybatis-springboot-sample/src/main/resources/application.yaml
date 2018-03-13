@@ -1,0 +1,19 @@
+# application.yaml
+# Server settings (ServerProperties)
+# 以数据为中心的标记语言 ,易于读写 ,替代xml
+# springboot 默认是8080端口 ,没有项目地址
+
+# 服务器设置
+server:
+  port: 9999
+  address: 127.0.0.1
+  sessionTimeout: 30
+  contextPath: /RestServer
+
+  # 内置tomcat设置
+tomcat:
+  accessLogEnabled: false
+  protocolHeader: x-forwarded-proto
+  remoteIpHeader: x-forwarded-for
+  basedir:
+  backgroundProcessorDelay: 30 # secs

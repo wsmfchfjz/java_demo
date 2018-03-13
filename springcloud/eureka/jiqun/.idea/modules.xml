@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cloud-client/cloud-client.iml" filepath="$PROJECT_DIR$/cloud-client/cloud-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-person/first-person.iml" filepath="$PROJECT_DIR$/cloud-person/first-person.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-police/first-police.iml" filepath="$PROJECT_DIR$/cloud-police/first-police.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-114/first-server.iml" filepath="$PROJECT_DIR$/cloud-114/first-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/jiqun.iml" filepath="$PROJECT_DIR$/.idea/jiqun.iml" />
+    </modules>
+  </component>
+</project>

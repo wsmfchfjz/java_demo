@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread - %-5level] | %-36logger{36} | %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %C{1} : %m%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/server-%d{yyyy-MM-dd-HH'.log'}</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="org.springframework" level="DEBUG"/>
+    <logger name="org.springframework.remoting" level="DEBUG"/>
+    <logger name="org.springframework.scheduling.quartz" level="DEBUG"/>
+    <logger name="org.springframework.data.jpa" level="DEBUG"/>
+    <logger name="org.mybatis.spring" level="DEBUG"/>
+    <logger name="ch.qos.logback" level="WARN"/>
+    <logger name="anddd7.springboot" level="DEBUG"/>
+
+    <root level="DEBUG">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="logfile"/>
+    </root>
+</configuration>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+</head>
+
+<body>
+<div>
+    <button id="defaultLogin">Default Login</button>
+    <button id="connectServer">Connect Server</button>
+</div>
+
+<div><span id="response"></span></div>
+
+<script src="js/libs/jquery/jquery.js"></script>
+<script type="text/javascript">
+    $('#connectServer').click(function () {
+        $.get('hello', function (response) {
+            printResponse(response);
+        });
+    });
+
+    $('#defaultLogin').click(function () {
+        $.get('defaultLogin', function (response) {
+            printResponse(response);
+        });
+    });
+
+    function printResponse(response) {
+        $('#response').html(JSON.stringify(response));
+    }
+
+</script>
+</body>
+</html>

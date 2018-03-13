@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>聊天室</p>
+<div>
+    <div>
+        <label>发送者:<input type="text" id="sender"/></label><label>接受者:<input type="text" id="receiver"/></label>
+    </div>
+    <div>
+        <textarea rows="4" cols="60" id="msg"></textarea>
+    </div>
+    <div>
+        <button id="submit">发送</button>
+        <button id="stop">停止</button>
+    </div>
+    <div>
+        <span id="record"></span>
+    </div>
+</div>
+
+<script src="../assets/bower_components/sockjs-client/dist/sockjs.min.js"></script>
+<script src="../assets/bower_components/stomp-websocket/lib/stomp.min.js"></script>
+<script src="../assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+    var socket = new SockJS('/endpointP2P');
+    var stompClient = Stomp.over(socket);
+    stompClient.connect('guest', 'guest', function (frame) {
+        stompClient.subscribe('/user/queue/notifications', function (response) {
+            $('#record').html(response);
+        });
+    });
+
+    $('#submit').click(function () {
+        var sender = $('#sender').val();
+        var receiver = $('#receiver').val();
+        var msg = $('#msg').val();
+        stompClient.send("/chat", {},
+            JSON.stringify({sender: sender, receiver: receiver, msg: msg})
+        );
+
+    });
+
+    $('#stop').click(function () {
+        socket.close();
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="anddd7.springboot.dao.IdSequenceMapper" >
+  <resultMap id="BaseResultMap" type="anddd7.springboot.domain.IdSequence" >
+    <id column="table_name" property="tableName" jdbcType="VARCHAR" />
+    <result column="start" property="start" jdbcType="BIGINT" />
+    <result column="end" property="end" jdbcType="BIGINT" />
+    <result column="step" property="step" jdbcType="BIGINT" />
+    <result column="current" property="current" jdbcType="BIGINT" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    table_name, start, end, step, current, state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from id_sequence
+    where table_name = #{tableName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from id_sequence
+    where table_name = #{tableName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="anddd7.springboot.domain.IdSequence" >
+    insert into id_sequence (table_name, start, end, 
+      step, current, state)
+    values (#{tableName,jdbcType=VARCHAR}, #{start,jdbcType=BIGINT}, #{end,jdbcType=BIGINT}, 
+      #{step,jdbcType=BIGINT}, #{current,jdbcType=BIGINT}, #{state,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="anddd7.springboot.domain.IdSequence" >
+    insert into id_sequence
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tableName != null" >
+        table_name,
+      </if>
+      <if test="start != null" >
+        start,
+      </if>
+      <if test="end != null" >
+        end,
+      </if>
+      <if test="step != null" >
+        step,
+      </if>
+      <if test="current != null" >
+        current,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tableName != null" >
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="start != null" >
+        #{start,jdbcType=BIGINT},
+      </if>
+      <if test="end != null" >
+        #{end,jdbcType=BIGINT},
+      </if>
+      <if test="step != null" >
+        #{step,jdbcType=BIGINT},
+      </if>
+      <if test="current != null" >
+        #{current,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="anddd7.springboot.domain.IdSequence" >
+    update id_sequence
+    <set >
+      <if test="start != null" >
+        start = #{start,jdbcType=BIGINT},
+      </if>
+      <if test="end != null" >
+        end = #{end,jdbcType=BIGINT},
+      </if>
+      <if test="step != null" >
+        step = #{step,jdbcType=BIGINT},
+      </if>
+      <if test="current != null" >
+        current = #{current,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where table_name = #{tableName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="anddd7.springboot.domain.IdSequence" >
+    update id_sequence
+    set start = #{start,jdbcType=BIGINT},
+      end = #{end,jdbcType=BIGINT},
+      step = #{step,jdbcType=BIGINT},
+      current = #{current,jdbcType=BIGINT},
+      state = #{state,jdbcType=INTEGER}
+    where table_name = #{tableName,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from id_sequence
+  </select>
+</mapper>

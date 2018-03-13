@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>广播式WebSocket</title>
+</head>
+<body onload="disconnect()">
+<noscript>
+    <h2 style="color: #ff0000;">浏览器不支持WebSocket</h2>
+</noscript>
+
+<div>
+
+    <div>
+        <button id="connect" onclick="connect()">连接</button>
+        <button id="disconnect" onclick="disconnect()">关闭连接</button>
+    </div>
+    <hr/>
+
+    <div id="conversationDiv">
+        <div>
+            <label>你的名字</label><input type="text" id="name"/>
+        </div>
+        <div>
+            <button id="sendName" onclick="sendName()">发送</button>
+            <p id="response"></p>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/bower_components/sockjs-client/dist/sockjs.min.js"></script>
+<script src="../assets/bower_components/stomp-websocket/lib/stomp.min.js"></script>
+<script src="../assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    var stompClient = null;
+
+    /**
+     * 显示当前的连接状态
+     * @param connected
+     */
+    function setConnected(connected) {
+        $('#connect').disabled = connected;
+        $('#disconnect').disabled = !connected;
+        $('#conversationDiv').css('visibility', connected ? 'visible' : 'hidden');
+        $('#response').html();
+    }
+    /**
+     * 连接服务器端的WebSocket
+     */
+    function connect() {
+        //使用SockJS连接服务端的Endpoint
+        var socket = new SockJS('/endpointEddy');
+        //使用STOMP协议
+        stompClient = Stomp.over(socket);
+        //连接成功的回调函数
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+            console.log('Connected Success ,Frame is:', frame);
+            //订阅消息
+            stompClient.subscribe('/topic/getResponse', function (response) {
+                showResponse(JSON.parse(response.body).responseMsg);
+            });
+        });
+    }
+
+    /**
+     * 关闭连接
+     */
+    function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+        }
+        setConnected(false);
+        console.log('Disconnect WebSocket.');
+    }
+
+    /**
+     * 主动向服务端发送消息
+     */
+    function sendName() {
+        console.log("Send message to Server.");
+        var name = $('#name').val();
+        stompClient.send('/welcome', {}, JSON.stringify({name: name}));
+    }
+
+    /**
+     * 显示消息
+     * @param message
+     */
+    function showResponse(message) {
+        console.log("Receive message.");
+        var response = $('#response');
+        response.html(message);
+    }
+
+</script>
+</body>
+</html>
